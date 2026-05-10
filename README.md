@@ -189,14 +189,6 @@ cd backend
 
 Feel free to fork this project and submit pull requests for any improvements.
 
-## License
-
-This project is provided as-is for educational and commercial use.
-
-## Support
-
-For issues and questions, please create an issue in the repository or contact the development team.
-
 ---
 
 **Version**: 0.0.1-SNAPSHOT  
