@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import com.snipurl.entity.Url;
 import com.snipurl.repository.UrlRepository;
@@ -16,7 +18,8 @@ public class UrlService {
 
   @Autowired
   UrlRepository urlRepository;
-
+  // @CachePut ----- Always executes method and updates cache.
+  @CachePut(value = "urls", key="#url.id")
   public Optional<Url> shortenUrl(String originalString){
 
      Url url = new Url();
@@ -40,7 +43,8 @@ public class UrlService {
       return optional;
 
   }
-
+  // @Cacheable ---- Stores data if absent.
+  @Cacheable(value="urls", key="#shortCode")
   public Optional<Url> getOriginaUrl(String shortCode){
     return urlRepository.findUrlByShortcode(shortCode);
   }

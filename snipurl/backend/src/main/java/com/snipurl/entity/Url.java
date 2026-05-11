@@ -1,5 +1,6 @@
 package com.snipurl.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -11,7 +12,8 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Url {
+// Objects stored in Redis should be Serializable. Otherwise serialization issues may occur.
+public class Url implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long Id;
