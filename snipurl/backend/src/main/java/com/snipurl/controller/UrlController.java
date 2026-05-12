@@ -47,4 +47,9 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     
+    @GetMapping("/stats/{shortCode}")
+    public ResponseEntity<Url> getClickCount(@PathVariable String shortCode){
+        Url url = urlService.getOriginaUrl(shortCode).orElse(null);
+        return ResponseEntity.ok(url);
+    }
 }

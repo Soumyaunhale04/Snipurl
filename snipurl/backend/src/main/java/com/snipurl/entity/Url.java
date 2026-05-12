@@ -21,4 +21,5 @@ public class Url implements Serializable{
   private String shortcode;
   private LocalDateTime createdTime;
   private LocalDateTime expiryTime;
+  public  Long clickCount = 0L;
 }

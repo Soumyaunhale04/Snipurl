@@ -19,7 +19,7 @@ public class UrlService {
   @Autowired
   UrlRepository urlRepository;
   // @CachePut ----- Always executes method and updates cache.
-  @CachePut(value = "urls", key="#url.id")
+  @CachePut(value = "urls", key="#result.shortcode")
   public Optional<Url> shortenUrl(String originalString){
 
      Url url = new Url();
@@ -46,6 +46,11 @@ public class UrlService {
   // @Cacheable ---- Stores data if absent.
   @Cacheable(value="urls", key="#shortCode")
   public Optional<Url> getOriginaUrl(String shortCode){
-    return urlRepository.findUrlByShortcode(shortCode);
+    Url url = urlRepository.findUrlByShortcode(shortCode).orElse(null);
+    url.clickCount++;
+    urlRepository.save(url);
+    return Optional.ofNullable(url);
   }
+
+
 }
