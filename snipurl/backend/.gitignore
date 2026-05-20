@@ -36,4 +36,4 @@ application.yml
 
 target/
 .idea/
-*.log
+*.loggit add .gitignore
