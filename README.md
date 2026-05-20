@@ -13,7 +13,8 @@ Snipurl is a simple yet powerful URL shortening service that converts lengthy UR
 - **Expiry Support**: URLs can have optional expiry times
 - **Persistent Storage**: All URLs stored in PostgreSQL database
 - **Rate Limiting**: Basic request throttling on `/api/**`
-- **Statistics Endpoint**: View stored URL metadata for a shortcode
+- **Analytics / Click Counter**: Click counts are tracked per shortcode
+- **Statistics Endpoint**: View stored URL metadata and click analytics for a shortcode
 - **RESTful API**: Clean and intuitive REST endpoints
 
 ## Technology Stack
@@ -159,7 +160,7 @@ curl -X GET http://localhost:8080/api/abc123 -L
 
 **Endpoint**: `GET /api/stats/{shortCode}`
 
-Returns the stored URL object for the shortcode.
+Returns the stored URL object for the shortcode, including click count analytics.
 
 ## Data Model
 
@@ -191,11 +192,8 @@ cd backend
 ## Future Enhancements
 
 - [ ] Custom shortcode support
-- [ ] Analytics dashboard (click tracking)
 - [ ] URL expiration enforcement
-- [ ] Rate limiting
 - [ ] User authentication and management
-- [ ] Admin panel for URL management
 - [ ] API key support
 - [ ] QR code generation
 
