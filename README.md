@@ -12,6 +12,8 @@ Snipurl is a simple yet powerful URL shortening service that converts lengthy UR
 - **URL Retrieval**: Redirect from shortcode to original URL with automatic 302 redirects
 - **Expiry Support**: URLs can have optional expiry times
 - **Persistent Storage**: All URLs stored in PostgreSQL database
+- **Rate Limiting**: Basic request throttling on `/api/**`
+- **Statistics Endpoint**: View stored URL metadata for a shortcode
 - **RESTful API**: Clean and intuitive REST endpoints
 
 ## Technology Stack
@@ -19,6 +21,7 @@ Snipurl is a simple yet powerful URL shortening service that converts lengthy UR
 - **Framework**: Spring Boot 4.0.7
 - **Language**: Java 17
 - **Database**: PostgreSQL
+- **Caching**: Redis
 - **ORM**: Spring Data JPA
 - **Build Tool**: Maven
 - **Additional Libraries**: Lombok (for reducing boilerplate code)
@@ -89,20 +92,24 @@ spring:
       ddl-auto: create
 ```
 
+When running with Docker Compose, the service host names are `postgres` and `redis`.
+
 ### Build & Run
 
-1. Navigate to the backend directory:
+Option 1: Run with Docker Compose
+
 ```bash
 cd backend
+docker compose up --build
 ```
 
-2. Build the project:
+This starts the application with PostgreSQL and Redis.
+
+Option 2: Run locally with Maven
+
 ```bash
+cd backend
 ./mvnw clean package
-```
-
-3. Run the application:
-```bash
 ./mvnw spring-boot:run
 ```
 
@@ -148,6 +155,12 @@ curl -X GET http://localhost:8080/api/abc123 -L
 **Error Response** (404 Not Found):
 - Returns 404 if shortcode does not exist
 
+### URL Metadata
+
+**Endpoint**: `GET /api/stats/{shortCode}`
+
+Returns the stored URL object for the shortcode.
+
 ## Data Model
 
 ### Url Entity
@@ -159,6 +172,7 @@ curl -X GET http://localhost:8080/api/abc123 -L
 | shortcode | String | The generated short code |
 | createdTime | LocalDateTime | Timestamp when URL was shortened |
 | expiryTime | LocalDateTime | Optional expiry time for the shortened URL |
+| clickCount | Long | Click count / metadata field |
 
 ## Development
 
