@@ -33,3 +33,7 @@ build/
 .vscode/
 
 application.yml
+
+target/
+.idea/
+*.log
